@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "cmd/server.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run server\" \"cd ../frontend/ && npm start\"",
-    "server": "nodemon cmd/server.js",
+    "server": "nodemon server.js",
     "dev": "nodemon server",
     "build": "npm i"
   },
