@@ -30,7 +30,14 @@ const getEmployees = async (req, res) => {
     // Process relevant employees data
     employees = employees.map((employee) => {
       const daysWorked = daysDiff(employee.start_date);
-      return { ...employee._doc, days_worked: daysWorked };
+      return {
+        id: employee.id,
+        name: employee.name,
+        email_address: employee.email_address,
+        phone_number: employee.phone,
+        days_worked: daysWorked,
+        cafe: employee.cafe,
+      };
     });
 
     employees.sort((a, b) => a.days_worked - b.days_worked);
@@ -126,7 +133,7 @@ const updateEmployee = async (req, res) => {
 // DELETE: Delete an employee by ID
 const deleteEmployee = async (req, res) => {
   const { id } = req.params; // Extract the employee ID from the URL parameters
-  
+
   // Delete the employee
   try {
     // Find the employee by ID and delete them
