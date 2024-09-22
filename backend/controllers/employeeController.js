@@ -1,5 +1,5 @@
 const Employee = require("../models/Employee");
-const { formatDate, daysDiff, today } = require("../utils/dateHelper");
+const { formatDate, daysDiff, today } = require("../utils/dateUtils");
 const { v4: uuidv4 } = require("uuid");
 
 // GET: Get all employees
@@ -41,14 +41,6 @@ const getEmployees = async (req, res) => {
 
 // POST: Create a new employee
 const createEmployee = async (req, res) => {
-  // Validate the employee
-  const validation = validateEmployee(req.body);
-  if (!validation.valid) {
-    return res
-      .status(400)
-      .json({ message: "Invalid Employee Data", errors: validation.errors });
-  }
-
   // Retrieve and clean employee data
   const { name, email_address, phone_number, gender, start_date, cafe } =
     req.body;
@@ -87,19 +79,7 @@ const createEmployee = async (req, res) => {
 
 // PUT: Update an employee by ID
 const updateEmployee = async (req, res) => {
-  // Validate ID parameter
   const { id } = req.params;
-  if (!validateEmployeeUUID(id)) {
-    return res.status(400).json({ message: "Invalid employee ID" });
-  }
-
-  // Validate the employee details
-  const validation = validateEmployee(req.body);
-  if (!validation.valid) {
-    return res
-      .status(400)
-      .json({ message: "Invalid Employee Data", errors: validation.errors });
-  }
 
   // Retrieve and clean new employee data
   const updatedData = req.body;
@@ -154,71 +134,6 @@ const generateEmployeeUUID = () => {
   const uuid = uuidv4().replace(/-/g, "");
   const alphanumeric = uuid.slice(0, 7);
   return `UI${alphanumeric.toUpperCase()}`;
-};
-
-// Validate that the ID matches the 'UIXXXXXXX' format
-const validateEmployeeUUID = (id) => {
-  const regex = /^UI[A-Z0-9]{7}$/;
-  return regex.test(id);
-};
-
-// Validate that the email address is in the correct format and not empty
-const validateEmail = (email) => {
-  if (!email || email.trim() === "") {
-    return { valid: false, message: "Email cannot be empty" };
-  }
-  const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!re.test(String(email).toLowerCase())) {
-    return { valid: false, message: "Email does not fit the required format" };
-  }
-  return { valid: true };
-};
-
-// Validate that the phone number is in the correct format and not empty
-const validatePhoneNumber = (phone_number) => {
-  if (!phone_number || phone_number.trim() === "") {
-    return { valid: false, message: "Phone number cannot be empty" };
-  }
-  const regex = /^[89]\d{7}$/; // Starts with 8 or 9, and 8 digits long
-  if (!regex.test(phone_number)) {
-    return {
-      valid: false,
-      message: "Phone number must start with 8 or 9 and be 8 digits long",
-    };
-  }
-  return { valid: true };
-};
-
-// Validate the gender and check if it's not empty
-const validateGender = (gender) => {
-  if (!gender || gender.trim() === "") {
-    return { valid: false, message: "Gender cannot be empty" };
-  }
-  if (!["Male", "Female"].includes(gender)) {
-    return { valid: false, message: "Gender must be either Male or Female" };
-  }
-  return { valid: true };
-};
-
-// Validate the employee
-const validateEmployee = (employee) => {
-  const { email_address, phone_number, gender } = employee;
-
-  const emailValidation = validateEmail(email_address);
-  const phoneValidation = validatePhoneNumber(phone_number);
-  const genderValidation = validateGender(gender);
-
-  const errors = [];
-
-  if (!emailValidation.valid) errors.push(emailValidation.message);
-  if (!phoneValidation.valid) errors.push(phoneValidation.message);
-  if (!genderValidation.valid) errors.push(genderValidation.message);
-
-  if (errors.length > 0) {
-    return { valid: false, errors };
-  }
-
-  return { valid: true };
 };
 
 module.exports = {

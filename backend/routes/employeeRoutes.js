@@ -1,10 +1,11 @@
 const express = require('express');
 const { getEmployees, createEmployee, updateEmployee } = require('../controllers/employeeController');
+const employeeValidation = require('../middlewares/employeeValidationMiddleware');
 
 const router = express.Router();
 
 router.get('/', getEmployees);
-router.post('/', createEmployee);
-router.put('/:id', updateEmployee);
+router.post('/', employeeValidation.validateEmployee, createEmployee);
+router.put('/:id', employeeValidation.validateID, employeeValidation.validateEmployee, updateEmployee);
 
 module.exports = router;
