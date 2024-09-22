@@ -9,7 +9,7 @@ const validateID = (req, res, next) => {
   if (!idValidation.valid) {
     return res
       .status(400)
-      .json({ message: "Invalid Employee ID format, must match UIXXXXXXX" });
+      .json({ message: "Invalid employee ID format, must match UIXXXXXXX" });
   }
 
   next();
@@ -30,7 +30,7 @@ const validateEmployee = (req, res, next) => {
   if (!genderValidation.valid) errors.push(genderValidation.message);
 
   if (errors.length > 0) {
-    return res.status(400).json({ message: "Invalid Employee Data", errors });
+    return res.status(400).json({ message: "Invalid employee data", errors });
   }
 
   next();

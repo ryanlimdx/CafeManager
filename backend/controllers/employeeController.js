@@ -5,13 +5,15 @@ const { v4: uuidv4 } = require("uuid");
 // GET: Get all employees
 const getEmployees = async (req, res) => {
   const { cafe } = req.query;
-
+  // validate the cafe ID
   if (cafe) {
     if (!uuidv4.validate(cafe)) {
       return res.status(400).json({ message: "Invalid cafe ID" });
     }
   }
+  // validate if the cafe exists
 
+  // Fetch all relevant employees from the database
   try {
     let employees;
     if (cafe) {
@@ -72,7 +74,7 @@ const createEmployee = async (req, res) => {
     res.status(201).json(newEmployee);
   } catch (error) {
     res
-      .status(400)
+      .status(500)
       .json({ message: "Error creating employee", error: error.message });
   }
 };
@@ -119,6 +121,29 @@ const updateEmployee = async (req, res) => {
   }
 };
 
+// DELETE: Delete an employee by ID
+const deleteEmployee = async (req, res) => {
+  const { id } = req.params; // Extract the employee ID from the URL parameters
+
+  try {
+    // Find the employee by ID and delete them
+    const deletedEmployee = await Employee.findOneAndDelete({ id });
+
+    if (!deletedEmployee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    // Return a success message if the employee was deleted
+    res.status(200).json({
+      message: `Employee ${deletedEmployee.name} deleted successfully`,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error deleting employee", error: error.message });
+  }
+};
+
 // Retrieves the fields that can be used to check for duplicate employees
 const getEmployeeDuplicateFields = (body) => {
   return {
@@ -140,4 +165,5 @@ module.exports = {
   getEmployees,
   createEmployee,
   updateEmployee,
+  deleteEmployee,
 };

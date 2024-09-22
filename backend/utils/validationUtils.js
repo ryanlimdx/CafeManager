@@ -14,8 +14,8 @@ const validateEmail = (email) => {
   if (!email || email.trim() === "") {
     return { valid: false, message: "Email cannot be empty" };
   }
-  const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!re.test(String(email).toLowerCase())) {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!regex.test(email)) {
     return { valid: false, message: "Email does not fit the required format" };
   }
   return { valid: true };
