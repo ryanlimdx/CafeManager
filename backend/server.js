@@ -4,6 +4,7 @@ const connectDB = require("./config/database");
 const dotenv = require("dotenv");
 const notFound = require("./middlewares/errorMiddleware");
 const employeeRoutes = require("./routes/employeeRoutes");
+const cafeRoutes = require("./routes/cafeRoutes");
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/employees", employeeRoutes);
+app.use("/api/cafes", cafeRoutes);
 
 // Error handling for invalid routes
 app.use(notFound);

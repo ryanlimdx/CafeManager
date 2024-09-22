@@ -1,5 +1,13 @@
 // This file contains validation methods for various attributes.
 
+// Validate the name by checking if it's not empty
+const validateName = (name) => {
+  if (!name || name.trim() === "") {
+    return { valid: false, message: "Name cannot be empty" };
+  }
+  return { valid: true };
+};
+
 // Validate that the ID matches the 'UIXXXXXXX' format
 const validateEmployeeId = (id) => {
   const regex = /^UI[A-Z0-9]{7}$/;
@@ -47,9 +55,28 @@ const validateGender = (gender) => {
   return { valid: true };
 };
 
+// Validate the description by checking if it's not empty
+const validateDescription = (description) => {
+  if (!description || description.trim() === "") {
+    return { valid: false, message: "Description cannot be empty" };
+  }
+  return { valid: true };
+};
+
+// Validate the location by checking if it's not empty
+const validateLocation = (location) => {
+  if (!location || location.trim() === "") {
+    return { valid: false, message: "Location cannot be empty" };
+  }
+  return { valid: true };
+};
+
 module.exports = {
+  validateName,
   validateEmployeeId,
   validateEmail,
   validatePhoneNumber,
   validateGender,
+  validateDescription,
+  validateLocation,
 };

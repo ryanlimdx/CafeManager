@@ -2,7 +2,7 @@ const Employee = require("../models/Employee");
 const { formatDate, daysDiff, today } = require("../utils/dateUtils");
 const { v4: uuidv4 } = require("uuid");
 
-// GET: Get all employees
+// GET: Get relevant employees
 const getEmployees = async (req, res) => {
   const { cafe } = req.query;
   // validate the cafe ID
@@ -40,7 +40,7 @@ const getEmployees = async (req, res) => {
       };
     });
 
-    employees.sort((a, b) => a.days_worked - b.days_worked);
+    employees.sort((a, b) => b.days_worked - a.days_worked);
 
     res.status(200).json(employees);
   } catch (error) {
@@ -143,7 +143,6 @@ const deleteEmployee = async (req, res) => {
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    // Return a success message if the employee was deleted
     res.status(200).json({
       message: `Employee ${deletedEmployee.name} deleted successfully`,
     });
