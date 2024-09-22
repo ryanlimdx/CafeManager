@@ -1,8 +1,8 @@
 // This file contains validation methods for employee data
-const { validateEmployeeId, validateEmail, validatePhoneNumber, validateGender } = require("../utils/validationUtils");
+const { validateEmployeeId, validateName, validateEmail, validatePhoneNumber, validateGender } = require("../utils/validationUtils");
 
 // Validate that the ID matches the required format
-const validateID = (req, res, next) => {
+const validateId = (req, res, next) => {
   const { id } = req.params;
   const idValidation = validateEmployeeId(id);
 
@@ -17,14 +17,16 @@ const validateID = (req, res, next) => {
 
 // Validate the employee
 const validateEmployee = (req, res, next) => {
-  const { email_address, phone_number, gender } = req.body;
+  const { name, email_address, phone_number, gender } = req.body;
 
+  const nameValidation = validateName(name);
   const emailValidation = validateEmail(email_address);
   const phoneValidation = validatePhoneNumber(phone_number);
   const genderValidation = validateGender(gender);
 
   const errors = [];
 
+  if (!nameValidation.valid) errors.push(nameValidation.message);
   if (!emailValidation.valid) errors.push(emailValidation.message);
   if (!phoneValidation.valid) errors.push(phoneValidation.message);
   if (!genderValidation.valid) errors.push(genderValidation.message);
@@ -37,6 +39,6 @@ const validateEmployee = (req, res, next) => {
 };
 
 module.exports = {
-  validateID,
+  validateId,
   validateEmployee,
 };
