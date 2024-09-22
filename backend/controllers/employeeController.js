@@ -13,8 +13,9 @@ const getEmployees = async (req, res) => {
   }
   // validate if the cafe exists
 
-  // Fetch all relevant employees from the database
+  // Fetch and process all relevant employees from the database
   try {
+    // Fetch relevant employees from the database
     let employees;
     if (cafe) {
       employees = await Employee.find({ cafe });
@@ -26,6 +27,7 @@ const getEmployees = async (req, res) => {
       return res.status(200).json([]);
     }
 
+    // Process relevant employees data
     employees = employees.map((employee) => {
       const daysWorked = daysDiff(employee.start_date);
       return { ...employee._doc, days_worked: daysWorked };
@@ -124,7 +126,8 @@ const updateEmployee = async (req, res) => {
 // DELETE: Delete an employee by ID
 const deleteEmployee = async (req, res) => {
   const { id } = req.params; // Extract the employee ID from the URL parameters
-
+  
+  // Delete the employee
   try {
     // Find the employee by ID and delete them
     const deletedEmployee = await Employee.findOneAndDelete({ id });
