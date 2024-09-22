@@ -34,7 +34,7 @@ const getEmployees = async (req, res) => {
         id: employee.id,
         name: employee.name,
         email_address: employee.email_address,
-        phone_number: employee.phone,
+        phone_number: employee.phone_number,
         days_worked: daysWorked,
         cafe: employee.cafe,
       };
