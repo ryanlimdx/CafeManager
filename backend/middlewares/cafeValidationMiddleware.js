@@ -9,7 +9,7 @@ const validateId = (req, res, next) => {
   if (!idValidation) {
     return res
       .status(400)
-      .json({ message: "Invalid employee ID format, must match UIXXXXXXX" });
+      .json({ message: "Invalid cafe UUID format" });
   }
 
   next();

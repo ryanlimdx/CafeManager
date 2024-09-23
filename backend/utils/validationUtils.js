@@ -1,4 +1,6 @@
 // This file contains validation methods for various attributes.
+const { validate } = require("uuid");
+const { dateFormat, parseDate } = require("./dateUtils");
 
 // Validate the name by checking if it's not empty
 const validateName = (name) => {
@@ -8,11 +10,19 @@ const validateName = (name) => {
   return { valid: true };
 };
 
-// Validate that the ID matches the 'UIXXXXXXX' format
+// Validate that the employee's ID matches the 'UIXXXXXXX' format
 const validateEmployeeId = (id) => {
   const regex = /^UI[A-Z0-9]{7}$/;
   if (!regex.test(id)) {
     return { valid: false, message: "Invalid Employee ID format, must match UIXXXXXXX" };
+  }
+  return { valid: true };
+};
+
+// Validate the cafe's ID format
+const validateCafeId = (id) => {
+  if (!validate(id)) {
+    return { valid: false, message: "Invalid Cafe ID format" };
   }
   return { valid: true };
 };
@@ -55,6 +65,15 @@ const validateGender = (gender) => {
   return { valid: true };
 };
 
+// Validate the date syntax
+const validateDate = (date) => {
+  const parsedDate = parseDate(date);
+  if (!parsedDate.isValid()) {
+    return { valid: false, message: `Invalid date format, it must be in the format ${dateFormat}` };
+  }
+  return { valid: true };
+};
+
 // Validate the description by checking if it's not empty
 const validateDescription = (description) => {
   if (!description || description.trim() === "") {
@@ -74,9 +93,11 @@ const validateLocation = (location) => {
 module.exports = {
   validateName,
   validateEmployeeId,
+  validateCafeId,
   validateEmail,
   validatePhoneNumber,
   validateGender,
+  validateDate,
   validateDescription,
   validateLocation,
 };
