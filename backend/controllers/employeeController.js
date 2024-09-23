@@ -93,7 +93,7 @@ const createEmployee = async (req, res) => {
       name,
       email_address,
       phone_number,
-      gender,
+      gender: gender.toLowerCase(),
       start_date: date,
       cafe: cafeId,
     });
@@ -192,7 +192,7 @@ const updateEmployee = async (req, res) => {
         name,
         email_address,
         phone_number,
-        gender,
+        gender: gender.toLowerCase(),
         start_date: date,
         ...cafeJson,
       },

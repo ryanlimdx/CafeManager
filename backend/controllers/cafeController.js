@@ -5,14 +5,13 @@ const { v4: uuidv4 } = require("uuid");
 
 // GET: Get relevant cafes
 const getCafes = async (req, res) => {
-  let { location } = req.query;
+  const { location } = req.query;
 
   try {
     // Fetch relevant cafes
     let cafes;
     if (location) {
-      location = location.toLowerCase();
-      cafes = await Cafe.find({ location });
+      cafes = await Cafe.find({ location: {$regex: new RegExp(location, "i")} });
     } else {
       cafes = await Cafe.find({});
     }
@@ -68,7 +67,7 @@ const createCafe = async (req, res) => {
       name,
       description,
       logo,
-      location: location.toLowerCase(),
+      location,
     });
 
     await cafe.save({ session });
@@ -111,7 +110,7 @@ const updateCafe = async (req, res) => {
     // Update the cafe details
     const updatedCafe = await Cafe.findOneAndUpdate(
       { id },
-      { name, description, logo, location: location.toLowerCase() },
+      { name, description, logo, location },
       { new: true, session }
     );
     if (!updatedCafe) {
