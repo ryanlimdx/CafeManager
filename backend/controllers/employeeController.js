@@ -77,7 +77,7 @@ const createEmployee = async (req, res) => {
     // Process cafe
     let cafeId;
     if (cafe) {
-      cafeId = getCafeMongoId(cafe, session);
+      cafeId = await getCafeMongoId(cafe, session);
       if (!cafeId) {
         return res.status(404).json({ message: "Cafe not found" });
       }
@@ -162,15 +162,15 @@ const updateEmployee = async (req, res) => {
     }
 
     // Process new cafe's ID
-    let cafeId;
+    let cafeJson, cafeId;
     if (cafe) {
       cafeId = await getCafeMongoId(cafe, session);
       if (!cafeId) {
         return res.status(404).json({ message: "New cafe not found" });
       }
-      cafeId = { cafe: cafeId };
+      cafeJson = { cafe: cafeId };
     } else {
-      cafeId = {$unset: { cafe: "" }};
+      cafeJson = {$unset: { cafe: "" }};
     }
 
     // Update the employee details
@@ -182,7 +182,7 @@ const updateEmployee = async (req, res) => {
         phone_number,
         gender,
         start_date: date,
-        ...cafeId,
+        ...cafeJson,
       },
       { new: true, session }
     );
