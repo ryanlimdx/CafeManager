@@ -10,25 +10,26 @@ const today = () => {
 // Format a date to consistent string format
 // @param {Date} or {String} date - The date to format
 const formatDate = (date) => {
-  return moment(date).format(dateFormat);
+  return moment(date, dateFormat, true).format(dateFormat);
 };
 
 // Formats a date string to consistent date format
 // @param {String} date - The date to parse
 const parseDate = (date) => {
-  return moment(date, dateFormat);
+  return moment(date, dateFormat, true);
 };
 
 // Get the difference in days between a date and the current date
 // @param {String} date - The date to compare
 const daysDiff = (date) => {
   const today = moment();
-  const start = moment(date, dateFormat);
+  const start = moment(date, dateFormat, true);
   const diff = today.diff(start, "days");
   return diff;
 };
 
 module.exports = {
+  dateFormat,
   today,
   formatDate,
   parseDate,

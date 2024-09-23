@@ -1,30 +1,33 @@
+const mongoose = require("mongoose");
 const Employee = require("../models/Employee");
+const Cafe = require("../models/Cafe");
 const { formatDate, daysDiff, today } = require("../utils/dateUtils");
 const { v4: uuidv4 } = require("uuid");
+const { getCafeMongoId } = require("./cafeController");
 
 // GET: Get relevant employees
 const getEmployees = async (req, res) => {
   const { cafe } = req.query;
-  // validate the cafe ID
+  // Validate the cafe ID
   if (cafe) {
     if (!uuidv4.validate(cafe)) {
       return res.status(400).json({ message: "Invalid cafe ID" });
     }
   }
-  // validate if the cafe exists
 
   // Fetch and process all relevant employees from the database
   try {
     // Fetch relevant employees from the database
     let employees;
     if (cafe) {
-      employees = await Employee.find({ cafe });
+      const cafeId = await getCafeMongoId(cafe);
+      employees = await Employee.find({ cafe: cafeId });
     } else {
       employees = await Employee.find({});
     }
 
     if (employees.length === 0) {
-      return res.status(200).json([]);
+      return res.status(200).json(employees);
     }
 
     // Process relevant employees data
@@ -34,7 +37,7 @@ const getEmployees = async (req, res) => {
         id: employee.id,
         name: employee.name,
         email_address: employee.email_address,
-        phone_number: employee.phone,
+        phone_number: employee.phone_number,
         days_worked: daysWorked,
         cafe: employee.cafe,
       };
@@ -52,20 +55,32 @@ const getEmployees = async (req, res) => {
 
 // POST: Create a new employee
 const createEmployee = async (req, res) => {
-  // Retrieve and clean employee data
-  const { name, email_address, phone_number, gender, start_date, cafe } =
-    req.body;
-  const id = generateEmployeeUUID();
-  const date = start_date ? formatDate(start_date) : today();
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   // Create the employee
   try {
+    // Retrieve and clean employee data
+    const { name, email_address, phone_number, gender, start_date, cafe } =
+      req.body;
+    const id = generateEmployeeUUID();
+    const date = start_date ? formatDate(start_date) : today();
+
     // Prevent duplicate employees
     const existingEmployee = await Employee.findOne(
       getEmployeeDuplicateFields(req.body)
-    );
+    ).session(session);
     if (existingEmployee) {
       return res.status(400).json({ message: "Employee already exists" });
+    }
+
+    // Process cafe
+    let cafeId;
+    if (cafe) {
+      cafeId = await getCafeMongoId(cafe, session);
+      if (!cafeId) {
+        return res.status(404).json({ message: "Cafe not found" });
+      }
     }
 
     // Create the new employee
@@ -75,81 +90,167 @@ const createEmployee = async (req, res) => {
       email_address,
       phone_number,
       gender,
-      date,
-      cafe,
+      start_date: date,
+      cafe: cafeId,
     });
-    await newEmployee.save();
+    await newEmployee.save({ session });
+
+    // Add to the cafe's employees list
+    if (cafe) {
+      await Cafe.findOneAndUpdate(
+        { id: cafe },
+        { $addToSet: { employees: newEmployee._id } },
+        { session }
+      );
+    }
+
+    await session.commitTransaction();
 
     res.status(201).json(newEmployee);
   } catch (error) {
+    await session.abortTransaction();
     res
       .status(500)
       .json({ message: "Error creating employee", error: error.message });
+  } finally {
+    session.endSession();
   }
 };
 
 // PUT: Update an employee by ID
 const updateEmployee = async (req, res) => {
-  const { id } = req.params;
-
-  // Retrieve and clean new employee data
-  const updatedData = req.body;
-  updatedData.start_date = updatedData.start_date
-    ? formatDate(updatedData.start_date)
-    : today();
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   // Update Employee
   try {
-    // Prevent duplicate employees
-    const existingEmployee = await Employee.findOne(
-      getEmployeeDuplicateFields(updatedData)
-    );
+    const { id } = req.params;
+    // Retrieve and clean new employee data
+    const { name, email_address, phone_number, gender, start_date, cafe } =
+      req.body;
+    const date = start_date ? formatDate(start_date) : today();
 
+    // Check if the employee to be updated exists
+    const employee = await Employee.findOne({ id })
+      .select("_id cafe")
+      .session(session);
+    if (!employee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    // New employee info; Prevent duplicate employees
+    const existingEmployee = await Employee.findOne({
+      ...getEmployeeDuplicateFields(req.body),
+      _id: { $ne: employee._id },
+    }).session(session);
     if (existingEmployee) {
       return res.status(400).json({
         message: "New information matches an employee that already exists",
       });
     }
 
-    // Update the employee
+    // Remove the employee from the old cafe's employees list
+    if (employee.cafe) {
+      const updatedOldCafe = await Cafe.findOneAndUpdate(
+        { _id: employee.cafe },
+        { $pull: { employees: employee._id } },
+        { session }
+      );
+      if (!updatedOldCafe) {
+        return res.status(404).json({ message: "Previous cafe not found" });
+      }
+    }
+
+    // Process new cafe's ID
+    let cafeJson, cafeId;
+    if (cafe) {
+      cafeId = await getCafeMongoId(cafe, session);
+      if (!cafeId) {
+        return res.status(404).json({ message: "New cafe not found" });
+      }
+      cafeJson = { cafe: cafeId };
+    } else {
+      cafeJson = {$unset: { cafe: "" }};
+    }
+
+    // Update the employee details
     const updatedEmployee = await Employee.findOneAndUpdate(
       { id },
-      updatedData,
-      { new: true }
+      {
+        name,
+        email_address,
+        phone_number,
+        gender,
+        start_date: date,
+        ...cafeJson,
+      },
+      { new: true, session }
     );
-
     if (!updatedEmployee) {
       return res.status(404).json({ message: "Employee not found" });
     }
 
+    // Add the employee to the new cafe's employees list
+    if (cafe) {
+      await Cafe.findOneAndUpdate(
+        { _id: cafeId },
+        { $addToSet: { employees: updatedEmployee._id } },
+        { session }
+      );
+    }
+
+    await session.commitTransaction();
+
     res.status(200).json(updatedEmployee);
   } catch (error) {
+    await session.abortTransaction();
     res
       .status(500)
       .json({ message: "Error updating employee", error: error.message });
+  } finally {
+    session.endSession();
   }
 };
 
 // DELETE: Delete an employee by ID
 const deleteEmployee = async (req, res) => {
-  const { id } = req.params; // Extract the employee ID from the URL parameters
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   // Delete the employee
   try {
-    // Find the employee by ID and delete them
-    const deletedEmployee = await Employee.findOneAndDelete({ id });
+    const { id } = req.params; // Extract the employee ID from the URL parameters
 
+    // Find the employee by ID and delete them
+    const deletedEmployee = await Employee.findOneAndDelete({ id }).session(
+      session
+    );
     if (!deletedEmployee) {
       return res.status(404).json({ message: "Employee not found" });
     }
+
+    // Remove the employee from the cafe's employees list
+    if (deletedEmployee.cafe) {
+      await Cafe.findOneAndUpdate(
+        { _id: deletedEmployee.cafe },
+        { $pull: { employees: deletedEmployee._id } },
+        { session }
+      );
+    }
+
+    await session.commitTransaction();
 
     res.status(200).json({
       message: `Employee ${deletedEmployee.name} deleted successfully`,
     });
   } catch (error) {
+    await session.abortTransaction();
+
     res
       .status(500)
       .json({ message: "Error deleting employee", error: error.message });
+  } finally {
+    session.endSession();
   }
 };
 
