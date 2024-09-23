@@ -59,7 +59,7 @@ const validateGender = (gender) => {
   if (!gender || gender.trim() === "") {
     return { valid: false, message: "Gender cannot be empty" };
   }
-  if (!["Male", "Female"].includes(gender)) {
+  if (!["male", "female"].includes(gender.toLowerCase())) {
     return { valid: false, message: "Gender must be either Male or Female" };
   }
   return { valid: true };
