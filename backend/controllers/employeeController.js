@@ -3,7 +3,7 @@ const Employee = require("../models/Employee");
 const Cafe = require("../models/Cafe");
 const { formatDate, daysDiff, today } = require("../utils/dateUtils");
 const { v4: uuidv4, validate } = require("uuid");
-const { getCafeMongoId } = require("./cafeController");
+const { getCafeMongoId, getCafeName, getCafeId } = require("./cafeController");
 
 // GET: Get relevant employees
 const getEmployees = async (req, res) => {
@@ -20,8 +20,8 @@ const getEmployees = async (req, res) => {
     // Fetch relevant employees from the database
     let employees;
     if (cafe) {
-      const cafeId = await getCafeMongoId(cafe);
-      employees = await Employee.find({ cafe: cafeId });
+      const cafeMongoId = await getCafeMongoId(cafe);
+      employees = await Employee.find({ cafe: cafeMongoId });
     } else {
       employees = await Employee.find({});
     }
@@ -31,17 +31,23 @@ const getEmployees = async (req, res) => {
     }
 
     // Process relevant employees data
-    employees = employees.map((employee) => {
-      const daysWorked = daysDiff(employee.start_date);
-      return {
-        id: employee.id,
-        name: employee.name,
-        email_address: employee.email_address,
-        phone_number: employee.phone_number,
-        days_worked: daysWorked,
-        cafe: employee.cafe,
-      };
-    });
+    employees = await Promise.all(
+      employees.map(async (employee) => {
+        const daysWorked = daysDiff(employee.start_date);
+        const cafeName = await getCafeName(employee.cafe);
+        const cafeId = await getCafeId(employee.cafe);
+        return {
+          id: employee.id,
+          name: employee.name,
+          email_address: employee.email_address,
+          phone_number: employee.phone_number,
+          start_date: employee.start_date,
+          days_worked: daysWorked,
+          cafe: {name: cafeName, id: cafeId},
+          gender: employee.gender,
+        };
+      })
+    );
 
     employees.sort((a, b) => b.days_worked - a.days_worked);
 
@@ -73,7 +79,12 @@ const createEmployee = async (req, res) => {
     if (existingEmployee) {
       await session.abortTransaction();
       session.endSession();
-      return res.status(400).json({ message: "An employee with the same email or phone number already exists" });
+      return res
+        .status(400)
+        .json({
+          message:
+            "An employee with the same email or phone number already exists",
+        });
     }
 
     // Process cafe
@@ -153,7 +164,8 @@ const updateEmployee = async (req, res) => {
       await session.abortTransaction();
       session.endSession();
       return res.status(400).json({
-        message: "New information matches an employee with the same email or phone number",
+        message:
+          "New information matches an employee with the same email or phone number",
       });
     }
 
