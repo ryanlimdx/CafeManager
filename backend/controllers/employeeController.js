@@ -140,20 +140,22 @@ const updateEmployee = async (req, res) => {
     session.startTransaction();
 
     const { id } = req.params;
-    // Retrieve and clean new employee data
+    // Retrieve new employee data
     const { name, email_address, phone_number, gender, start_date, cafe } =
       req.body;
-    const date = start_date ? formatDate(start_date) : today();
 
     // Check if the employee to be updated exists
     const employee = await Employee.findOne({ id })
-      .select("_id cafe")
+      .select("_id cafe start_date")
       .session(session);
     if (!employee) {
       await session.abortTransaction();
       session.endSession();
       return res.status(404).json({ message: "Employee not found" });
     }
+
+    // Clean data, reuse appropriately
+    const date = start_date ? formatDate(start_date) : employee.start_date;
 
     // New employee info; Prevent duplicate employees
     const existingEmployee = await Employee.findOne({
