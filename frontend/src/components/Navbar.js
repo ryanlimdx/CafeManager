@@ -43,7 +43,7 @@ const Navbar = () => {
             variant={isCafes ? "h4" : "h6"}
             style={{ color: isCafes ? "black" : "grey" }}
           >
-            Cafe
+            Café
           </Typography>
         </span>
         <span

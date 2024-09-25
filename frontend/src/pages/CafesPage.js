@@ -32,7 +32,7 @@ const CafesPage = () => {
     setOpenConfirmDialog(false);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Container><div>Loading...</div></Container>;
 
   return (
     <Container>
@@ -43,7 +43,7 @@ const CafesPage = () => {
         marginBottom="20px"
       >
         <Typography variant="h5">
-          Cafes
+        Cafés
         </Typography>
         <Button
           color="primary"
@@ -59,10 +59,11 @@ const CafesPage = () => {
               backgroundColor: 'primary.dark'
             },
             paddingLeft: '20px',
-            paddingRight: '20px'
+            paddingRight: '20px',
+            textTransform: 'none' 
           }}
         >
-          <span style={{ margin: '0', padding: '0' }}>+ New cafe</span>
+          + New Café
         </Button>
       </Box>
 

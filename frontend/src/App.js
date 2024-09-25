@@ -7,6 +7,7 @@ import {
   createRoute,
   createRootRoute,
 } from "@tanstack/react-router";
+import './App.css';
 import CafesPage from "./pages/CafesPage";
 import UpdateCafesPage from "./pages/UpdateCafesPage";
 // import EmployeesPage from './pages/EmployeesPage';
