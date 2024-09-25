@@ -38,9 +38,7 @@ Café Manager is designed to help users manage cafés and their employees effici
 - **Database**: MongoDB
 - **API Communication**: RESTful APIs
 
-## Setting Up Your Local Environment
-
-### Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 - **Node.js** (version 14 or later) [Download Node.js](https://nodejs.org/en/download/prebuilt-installer)
@@ -50,15 +48,17 @@ Optionally, the following tool is useful to facilitate testing of API endpoints:
 
 - **Postman** (latest version): [Download Postman](https://www.postman.com/downloads/)
 
-### Steps
+## Setting Up Your Local Environment
 
-#### Step 1. Clone the Repository:
+
+### Step 1: Clone the Repository:
 ```bash
 git clone https://github.com/ryanlimdx/CafeManager.git
 cd cafe-manager
 ```
 
-#### Step 2. Install Dependencies: Navigate to both frontend and backend folders and install the necessary dependencies:
+### Step 2: Install Dependencies
+Navigate to both frontend and backend folders and install the necessary dependencies:
 
 ```bash
 cd frontend
@@ -68,7 +68,8 @@ cd ../backend
 npm install
 ```
 
-#### Step 3. Environment Variables: Create a .env file in the backend folder with the following content:
+### Step 3: Environment Variables
+Create a .env file in the backend folder with the following content:
 
 ```env
 PORT=5000
@@ -79,7 +80,8 @@ Feel free to make use of the .env.example file located in `backend`.
 
 Make sure to whitelist the IP address you will be using in Mongo Atlas.
 
-#### Step 4. Start the frontend and backend by running the following command in the main directory:
+### Step 4: Run the application
+Start the frontend and backend by running the following command in the main directory:
 
 ```bash
 npm start
@@ -87,19 +89,20 @@ npm start
 
 Alternatively, you may choose to launch each of them separately:
 
-**Backend**: Start the backend server by running the following command in the backend directory:
+***Backend***: Start the backend server by running the following command in the backend directory:
 
 ```bash
 npm start
 ```
 
-**Frontend**: Start the frontend development server in the frontend directory:
+***Frontend***: Start the frontend development server in the frontend directory:
 
 ```bash
 npm start
 ```
 
-#### Step 5. Open the Application: Navigate to http://localhost:3000 in your web browser**.
+### Step 5: Open the Application
+Navigate to http://localhost:3000 in your web browser.
 
 
 ## API Endpoints
