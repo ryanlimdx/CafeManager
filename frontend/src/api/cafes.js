@@ -32,7 +32,6 @@ export const useUpdateCafe = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (cafe) => {
-      console.log('cafe updating:', cafe);
       return axios.put(`/cafes/${cafe.id}`, cafe);
     },
     onSuccess: () => {
