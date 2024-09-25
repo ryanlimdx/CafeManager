@@ -194,6 +194,15 @@ const getCafeName = async (cafeId) => {
   return cafe.name;
 }
 
+// Retrieve the cafe id from the cafe's mongo ID
+const getCafeId = async (cafeId) => {
+  const cafe = await Cafe.findOne({ _id: cafeId }).select("id");
+  if (!cafe) {
+    return null;
+  }
+  return cafe.id;
+}
+
 // Retrieves the fields that can be used to check for duplicate employees
 const getCafeDuplicateFields = (body) => {
   return {
@@ -208,5 +217,6 @@ module.exports = {
   updateCafe,
   deleteCafe,
   getCafeName,
+  getCafeId,
   getCafeMongoId,
 };

@@ -11,7 +11,7 @@ import './App.css';
 import CafesPage from "./pages/CafesPage";
 import UpdateCafesPage from "./pages/UpdateCafesPage";
 import EmployeesPage from './pages/EmployeesPage';
-// import AddEditEmployeePage from './pages/AddEditEmployeePage';
+import UpdateEmployeesPage from './pages/UpdateEmployeesPage';
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -47,26 +47,25 @@ const employeesRoute = createRoute({
   component: EmployeesPage,
 });
 
-// const addEmployeeRoute = createRoute({
-//   getParentRoute: () => rootRoute,
-//   path: '/add-employee',
-//   component: AddEditEmployeePage,
-// });
+const addEmployeeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/add-employee',
+  component: UpdateEmployeesPage,
+});
 
-// const editEmployeeRoute = createRoute({
-//   getParentRoute: () => rootRoute,
-//   path: '/edit-employee/:id',
-//   component: AddEditEmployeePage,
-// });
+const editEmployeeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/edit-employee/$id',
+  component: UpdateEmployeesPage,
+});
 
-// Add all routes as children of the root route
 const routeTree = rootRoute.addChildren([
   cafesRoute,
   addCafeRoute,
   editCafeRoute,
   employeesRoute,
-  // addEmployeeRoute,
-  // editEmployeeRoute,
+  addEmployeeRoute,
+  editEmployeeRoute,
 ]);
 
 // Create the router

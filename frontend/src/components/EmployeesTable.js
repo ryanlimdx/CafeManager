@@ -13,7 +13,7 @@ const employeeTable = ({ employees, onEdit, onDelete }) => {
     { headerName: "Email", field: "email_address", sortable: false},
     { headerName: "Phone", field: "phone_number", sortable: false},
     { headerName: "Days Worked", field: "days_worked", sortable: true, filter: true },
-    { headerName: "Café", field: "cafe", sortable: true, filter: true },
+    { headerName: "Café", field: "cafe.name", sortable: true, filter: true },
     {
       headerName: "Actions",
       cellRenderer: (params) => (

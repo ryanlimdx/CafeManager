@@ -31,8 +31,6 @@ const Navbar = () => {
   return (
     <Container
       style={{ paddingTop: "20px", paddingBottom: "20px" }}
-      justifyContent="space-between"
-      display="flex"
     >
       <div style={{ display: "flex", gap: "15px", alignItems: "flex-end" }}>
         <span

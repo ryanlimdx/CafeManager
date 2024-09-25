@@ -32,7 +32,6 @@ export const useUpdateEmployee = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (employee) => {
-      console.log('employee updating:', employee);
       return axios.put(`/employees/${employee.id}`, employee);
     },
     onSuccess: () => {

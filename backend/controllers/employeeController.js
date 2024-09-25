@@ -3,7 +3,7 @@ const Employee = require("../models/Employee");
 const Cafe = require("../models/Cafe");
 const { formatDate, daysDiff, today } = require("../utils/dateUtils");
 const { v4: uuidv4, validate } = require("uuid");
-const { getCafeMongoId, getCafeName } = require("./cafeController");
+const { getCafeMongoId, getCafeName, getCafeId } = require("./cafeController");
 
 // GET: Get relevant employees
 const getEmployees = async (req, res) => {
@@ -20,8 +20,8 @@ const getEmployees = async (req, res) => {
     // Fetch relevant employees from the database
     let employees;
     if (cafe) {
-      const cafeId = await getCafeMongoId(cafe);
-      employees = await Employee.find({ cafe: cafeId });
+      const cafeMongoId = await getCafeMongoId(cafe);
+      employees = await Employee.find({ cafe: cafeMongoId });
     } else {
       employees = await Employee.find({});
     }
@@ -35,13 +35,16 @@ const getEmployees = async (req, res) => {
       employees.map(async (employee) => {
         const daysWorked = daysDiff(employee.start_date);
         const cafeName = await getCafeName(employee.cafe);
+        const cafeId = await getCafeId(employee.cafe);
         return {
           id: employee.id,
           name: employee.name,
           email_address: employee.email_address,
           phone_number: employee.phone_number,
+          start_date: employee.start_date,
           days_worked: daysWorked,
-          cafe: cafeName,
+          cafe: {name: cafeName, id: cafeId},
+          gender: employee.gender,
         };
       })
     );
