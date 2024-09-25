@@ -124,5 +124,6 @@ The following are available endpoints:
 - `GET /employees` - Retrieve all employees or filter by café.
 - `POST /employees` - Add a new employee.
 - `PUT /employees/:id` - Update an existing employee.
+- `DELETE /employees/:id` - Delete an existing employee.
 
-Sample data is located in the `backend` directory.
+For documentation and sample data for the API endpoints, please refer to [API Endpoints](./docs/api-endpoints.md).
