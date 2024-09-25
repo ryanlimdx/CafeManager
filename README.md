@@ -106,7 +106,7 @@ Navigate to http://localhost:3000 in your web browser.
 
 
 ## API Endpoints
-To test the API endpoints, you may use a tool like **Postman** and create requests to the following URL:
+For documentation and sample data for the API endpoints, please refer to [API Endpoints](./docs/api-endpoints.md). To test the API endpoints, you may use a tool like **Postman** and create requests to the following URL:
 ```
 http://localhost:5000/api/path
 ```
@@ -125,5 +125,3 @@ The following are available endpoints:
 - `POST /employees` - Add a new employee.
 - `PUT /employees/:id` - Update an existing employee.
 - `DELETE /employees/:id` - Delete an existing employee.
-
-For documentation and sample data for the API endpoints, please refer to [API Endpoints](./docs/api-endpoints.md).
