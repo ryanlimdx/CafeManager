@@ -10,7 +10,7 @@ import {
 import './App.css';
 import CafesPage from "./pages/CafesPage";
 import UpdateCafesPage from "./pages/UpdateCafesPage";
-// import EmployeesPage from './pages/EmployeesPage';
+import EmployeesPage from './pages/EmployeesPage';
 // import AddEditEmployeePage from './pages/AddEditEmployeePage';
 
 const rootRoute = createRootRoute({
@@ -29,12 +29,6 @@ const cafesRoute = createRoute({
   component: CafesPage,
 });
 
-// const employeesRoute = createRoute({
-//   getParentRoute: () => rootRoute,
-//   path: '/employees',
-//   component: EmployeesPage,
-// });
-
 const addCafeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/add-cafe",
@@ -45,6 +39,12 @@ const editCafeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/edit-cafe/$id",
   component: UpdateCafesPage,
+});
+
+const employeesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/employees',
+  component: EmployeesPage,
 });
 
 // const addEmployeeRoute = createRoute({
@@ -64,7 +64,7 @@ const routeTree = rootRoute.addChildren([
   cafesRoute,
   addCafeRoute,
   editCafeRoute,
-  // employeesRoute,
+  employeesRoute,
   // addEmployeeRoute,
   // editEmployeeRoute,
 ]);
