@@ -1,4 +1,4 @@
-# Sample Data
+# API Endpoints
 <img src="./sample_response_postman.png" width="40%">
 
 In this document are sample data and responses for the various API endpoints offered.
