@@ -2,7 +2,7 @@ import React from "react";
 import { useEmployees, useDeleteEmployee } from "../api/employees";
 import { Box, Button, Container, Typography } from "@mui/material";
 import EmployeeTable from "../components/EmployeesTable";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Dialog,
@@ -13,7 +13,8 @@ import {
 } from "@mui/material";
 
 const EmployeesPage = () => {
-  const { data: employees = [], isLoading } = useEmployees();
+  const { cafe: cafeId, cafeName } = useSearch({from: '/employees'});
+  const { data: employees = [], isLoading } = useEmployees(cafeId);
   const deleteEmployee = useDeleteEmployee();
   const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ const EmployeesPage = () => {
         marginBottom="20px"
       >
         <Typography variant="h5">
-        Employees
+        Employees {cafeId ? `@ Café ${cafeName}` : ''}
         </Typography>
         <Button
           color="primary"

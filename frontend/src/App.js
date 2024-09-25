@@ -45,6 +45,10 @@ const employeesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/employees',
   component: EmployeesPage,
+  searchSchema: {
+    cafe: 'string',
+    cafeName: 'string',
+  },
 });
 
 const addEmployeeRoute = createRoute({
