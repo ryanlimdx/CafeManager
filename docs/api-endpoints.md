@@ -11,7 +11,7 @@ Do note the following:
 
 ## Table
 - [Cafés API](#cafés-api)
-  - [GET request](#get-cafes---retrieve-all-cafés)
+  - [GET request](#get-cafes---retrieve-all-cafés-or-filter-by-location)
   - [POST request](#post-cafes---add-a-new-café)
   - [PUT request](#put-cafesid---update-an-existing-café)
   - [DELETE request](#delete-cafesid---delete-a-café)
@@ -24,7 +24,7 @@ Do note the following:
 
 ## Cafés API
 
-### `GET /cafes` - Retrieve all cafés.
+### `GET /cafes` - Retrieve all cafés or filter by location
 To retrieve all cafés:
 ```
 http://localhost:5000/api/cafes

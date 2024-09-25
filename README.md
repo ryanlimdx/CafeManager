@@ -115,7 +115,7 @@ Replace `/path` with actual endpoints (such as `/cafes` or `/employees`) to inte
 The following are available endpoints:
 
 ### Cafés API
-- `GET /cafes` - Retrieve all cafés.
+- `GET /cafes` - Retrieve all cafés or filter by location.
 - `POST /cafes` - Add a new café.
 - `PUT /cafes/:id` - Update an existing café.
 - `DELETE /cafes/:id` - Delete a café.
