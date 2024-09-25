@@ -1,12 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const connectDB = require("./config/database");
-const dotenv = require("dotenv");
+const connectDB = require("./config/database"); 
 const notFound = require("./middlewares/errorMiddleware");
 const employeeRoutes = require("./routes/employeeRoutes");
 const cafeRoutes = require("./routes/cafeRoutes");
-
-dotenv.config();
 
 const app = express();
 

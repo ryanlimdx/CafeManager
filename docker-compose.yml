@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: mern-backend
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/usr/src/app
+    networks:
+      - mern-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: mern-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/usr/src/app
+    networks:
+      - mern-network
+
+  db:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+    networks:
+      - mern-network
+    command: mongod --quiet
+
+networks:
+  mern-network:
+    driver: bridge

@@ -7,8 +7,10 @@ Café Manager is designed to help users manage cafés and their employees effici
 
 - [Features](#features)
 - [Technologies](#technologies)
+- [Prerequisites](#prerequisites)
 - [Setting Up Your Local Environment](#setting-up-your-local-environment)
 - [API Endpoints](#api-endpoints)
+- [Additional Information](#additional-information)
 
 
 ## Features
@@ -41,8 +43,7 @@ Café Manager is designed to help users manage cafés and their employees effici
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-- **Node.js** (version 14 or later) [Download Node.js](https://nodejs.org/en/download/prebuilt-installer)
-- **MongoDB** (running locally or hosted via a service like MongoDB Atlas)
+- **Docker** (latest version): [Download Docker](https://www.docker.com/get-started/)
 
 Optionally, the following tool is useful to facilitate testing of API endpoints:
 
@@ -50,63 +51,57 @@ Optionally, the following tool is useful to facilitate testing of API endpoints:
 
 ## Setting Up Your Local Environment
 
-
-### Step 1: Clone the Repository:
+### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/ryanlimdx/CafeManager.git
 cd cafe-manager
 ```
 
-### Step 2: Install Dependencies
-Navigate to both frontend and backend folders and install the necessary dependencies:
-
-```bash
-cd frontend
-npm install
-
-cd ../backend
-npm install
-```
-
-### Step 3: Environment Variables
-Create a .env file in the backend folder with the following content:
+### Step 2: Set Up the Environment Variables
+Create a .env file in the root directory with the following content:
 
 ```env
 PORT=5000
 MONGO_URI=your-mongodb-connection-string
 ```
 
-Feel free to make use of the .env.example file located in `backend`.
+Feel free to make use of [.env.example](./.env.example)
 
 Make sure to whitelist the IP address you will be using in Mongo Atlas.
 
-### Step 4: Run the application
-Start the frontend and backend by running the following command in the main directory:
+### 3. Run the Application Using Docker
+To run the application in Docker, use Docker Compose. Run the following command from the root of your project:
 
 ```bash
-npm start
+docker-compose up --build
 ```
 
-Alternatively, you may choose to launch each of them separately:
+This command will:
 
-***Backend***: Start the backend server by running the following command in the backend directory:
+- Pull or build necessary Docker images for the frontend, backend, and MongoDB.
+- Spin up the containers for each service (MongoDB, Backend, Frontend).
+
+Docker will set up and run the following services:
+
+- Frontend: Available at http://localhost:3000 (or the port you specify).
+- Backend: Available at http://localhost:5000 (or the port you specify).
+- MongoDB: A MongoDB database container is set up and linked with the backend.
+
+### Step 4: Access the Application
+Once the containers are up and running:
+- Open a browser and visit http://localhost:3000 for the frontend.
+- Make API requests to http://localhost:5000/api for backend routes.
+
+### Step 5: Stopping the Application
+To stop the application, you can press `CTRL+C` in the terminal running Docker, or run:
 
 ```bash
-npm start
+docker-compose down
 ```
-
-***Frontend***: Start the frontend development server in the frontend directory:
-
-```bash
-npm start
-```
-
-### Step 5: Open the Application
-Navigate to http://localhost:3000 in your web browser.
-
+This will stop and remove the containers.
 
 ## API Endpoints
-For documentation and sample data for the API endpoints, please refer to [API Endpoints](./docs/api-endpoints.md). To test the API endpoints, you may use a tool like **Postman** and create requests to the following URL:
+For documentation of the API endpoints, please refer to [API Endpoints](./docs/api-endpoints.md). To test the API endpoints, you may use a tool like **Postman** and create requests to the following URL:
 ```
 http://localhost:5000/api/path
 ```
@@ -125,3 +120,22 @@ The following are available endpoints:
 - `POST /employees` - Add a new employee.
 - `PUT /employees/:id` - Update an existing employee.
 - `DELETE /employees/:id` - Delete an existing employee.
+
+## Additional Information
+To rebuild the Docker images (if there are changes in the Dockerfiles):
+
+```bash
+docker-compose up --build
+```
+
+To view running containers:
+
+```bash
+docker ps
+```
+
+To stop and remove containers, networks, and volumes:
+
+```bash
+docker-compose down --volumes
+```
