@@ -97,9 +97,9 @@ const EmployeesForm = ({
         email_address: email,
         phone_number: phone,
         gender,
-        cafe, // Submitting only the café ID
+        cafe,
       });
-      setIsFormDirty(false); // Reset form dirty state
+      setIsFormDirty(false);
     }
   };
 
@@ -203,7 +203,7 @@ const EmployeesForm = ({
           {/* Assigned Cafe Dropdown */}
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <FormLabel>Assigned Café</FormLabel>
+              <FormLabel>Assign a Café</FormLabel>
               <Select
                 value={cafe}
                 onChange={(e) => {
