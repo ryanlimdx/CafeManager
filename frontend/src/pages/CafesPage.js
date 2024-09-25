@@ -53,11 +53,6 @@ const CafesPage = () => {
             navigate({ to: "/add-cafe" });
           }}
           style={{
-            backgroundColor: 'primary.main',
-            boxShadow: 'none',
-            '&:hover': {
-              backgroundColor: 'primary.dark'
-            },
             paddingLeft: '20px',
             paddingRight: '20px',
             textTransform: 'none' 
