@@ -61,7 +61,6 @@ cd cafe-manager
 Create a .env file in the root directory with the following content:
 
 ```env
-PORT=5000
 MONGO_URI=your-mongodb-connection-string
 ```
 
