@@ -101,7 +101,7 @@ docker-compose down
 This will stop and remove the containers.
 
 ## API Endpoints
-For documentation of the API endpoints, please refer to [API Endpoints](./docs/api-endpoints.md). To test the API endpoints, you may use a tool like **Postman** and create requests to the following URL:
+For documentation (and some sample data) of the API endpoints, please refer to [API Endpoints](./docs/api-endpoints.md). To test the API endpoints, you may use a tool like **Postman** and create requests to the following URL:
 ```
 http://localhost:5000/api/path
 ```
