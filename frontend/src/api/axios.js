@@ -1,8 +1,7 @@
-// Modify the axios instance to point to the backend server.
 import axios from 'axios';
 
  export default axios.create({
-  baseURL: 'https://cafemanager-zgjk.onrender.com/api/',
+  baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
