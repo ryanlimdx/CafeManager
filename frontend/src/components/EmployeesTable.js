@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const employeeTable = ({ employees, onEdit, onDelete }) => {
   const columnDefs = [
     { headerName: "ID", field: "id", sortable: false },
-    { headerName: "Employee", field: "name", sortable: true, filter: true },
+    { headerName: "Name", field: "name", sortable: true, filter: true },
     { headerName: "Email", field: "email_address", sortable: false, filter: true },
     { headerName: "Phone", field: "phone_number", sortable: false, filter: true },
     { headerName: "Days Worked", field: "days_worked", sortable: true, filter: true },
