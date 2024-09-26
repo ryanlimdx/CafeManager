@@ -69,7 +69,7 @@ Feel free to make use of [.env.example](./.env.example)
 
 Make sure to whitelist the IP address you will be using in Mongo Atlas.
 
-### 3. Run the Application Using Docker
+### Step 3: Run the Application Using Docker
 To run the application in Docker, use Docker Compose. Run the following command from the root of your project:
 
 ```bash
