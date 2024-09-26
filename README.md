@@ -62,6 +62,7 @@ Create a .env file in the root directory with the following content:
 
 ```env
 MONGO_URI=your-mongodb-connection-string
+REACT_APP_API_BASE_URL=http://localhost:5000/api/
 ```
 
 Feel free to make use of [.env.example](./.env.example)
