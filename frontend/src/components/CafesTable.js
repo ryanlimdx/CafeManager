@@ -1,3 +1,4 @@
+// Table component for displaying cafes
 import React from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -10,12 +11,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const CafeTable = ({ cafes, onEdit, onDelete }) => {
   const navigate = useNavigate();
   const columnDefs = [
-    { headerName: "Café", field: "name", sortable: true, filter: true },
+    { headerName: "Name", field: "name", sortable: true, filter: true },
     { headerName: "Description", field: "description", flex: 2 },
     {
       headerName: "Employees",
       field: "employees",
       sortable: true,
+      filter: true,
       cellRenderer: (params) => (
         <div
           style={{ color: "blue", cursor: "pointer" }}

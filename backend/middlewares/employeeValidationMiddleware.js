@@ -1,4 +1,4 @@
-// This file contains validation methods for employee data
+// Contains validation methods for employee data
 const { validateEmployeeId, validateCafeId, validateName, validateEmail, validatePhoneNumber, validateGender, validateDate } = require("../utils/validationUtils");
 
 // Validate that the ID matches the required format

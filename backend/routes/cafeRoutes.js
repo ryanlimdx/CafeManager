@@ -1,3 +1,4 @@
+// Routes for cafes
 const express = require('express');
 const { getCafes, createCafe, updateCafe, deleteCafe } = require('../controllers/cafeController');
 const cafeValidation = require('../middlewares/cafeValidationMiddleware');

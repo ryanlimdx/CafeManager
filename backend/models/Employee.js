@@ -1,3 +1,4 @@
+// Initialise Employee Schema
 const mongoose = require("mongoose");
 const { today } = require("../utils/dateUtils");
 

@@ -1,3 +1,4 @@
+// Routes for employees
 const express = require('express');
 const { getEmployees, createEmployee, updateEmployee, deleteEmployee } = require('../controllers/employeeController');
 const employeeValidation = require('../middlewares/employeeValidationMiddleware');

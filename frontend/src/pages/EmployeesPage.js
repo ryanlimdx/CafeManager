@@ -1,3 +1,4 @@
+// Page to display all employees, with options to add, edit, and delete employees
 import React from "react";
 import { useEmployees, useDeleteEmployee } from "../api/employees";
 import { Box, Button, Container, Typography } from "@mui/material";

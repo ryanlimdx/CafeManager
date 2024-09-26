@@ -1,3 +1,4 @@
+// Table component for displaying employees
 import React from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -10,8 +11,8 @@ const employeeTable = ({ employees, onEdit, onDelete }) => {
   const columnDefs = [
     { headerName: "ID", field: "id", sortable: false },
     { headerName: "Employee", field: "name", sortable: true, filter: true },
-    { headerName: "Email", field: "email_address", sortable: false},
-    { headerName: "Phone", field: "phone_number", sortable: false},
+    { headerName: "Email", field: "email_address", sortable: false, filter: true },
+    { headerName: "Phone", field: "phone_number", sortable: false, filter: true },
     { headerName: "Days Worked", field: "days_worked", sortable: true, filter: true },
     { headerName: "Café", field: "cafe.name", sortable: true, filter: true },
     {

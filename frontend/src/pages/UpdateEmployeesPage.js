@@ -1,3 +1,4 @@
+// Page for updating the list of employees by adding or editing an employee
 import React from 'react';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { useAddEmployee, useUpdateEmployee, useEmployees } from '../api/employees';

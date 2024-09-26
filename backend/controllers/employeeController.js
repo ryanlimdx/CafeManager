@@ -1,3 +1,4 @@
+// API endpoints for employees
 const mongoose = require("mongoose");
 const Employee = require("../models/Employee");
 const Cafe = require("../models/Cafe");

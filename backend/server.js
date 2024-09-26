@@ -1,3 +1,4 @@
+// The entry point of the backend server
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes for employees and cafes
 app.use("/api/employees", employeeRoutes);
 app.use("/api/cafes", cafeRoutes);
 

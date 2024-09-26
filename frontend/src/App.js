@@ -1,3 +1,4 @@
+// Routes and router for the frontend
 import React from "react";
 import Navbar from './components/Navbar';
 import {
@@ -72,7 +73,7 @@ const routeTree = rootRoute.addChildren([
   editEmployeeRoute,
 ]);
 
-// Create the router
+// Create router
 const router = createRouter({ routeTree });
 
 function App() {

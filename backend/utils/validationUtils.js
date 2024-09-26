@@ -1,8 +1,9 @@
-// This file contains validation methods for various attributes.
+// Validation helper methods for various attributes.
 const { validate } = require("uuid");
 const { dateFormat, parseDate } = require("./dateUtils");
 
 // Validate the name by checking if it's not empty
+// @params {String} name - The name to validate
 const validateName = (name) => {
   if (!name || name.trim() === "") {
     return { valid: false, message: "Name cannot be empty" };
@@ -11,6 +12,7 @@ const validateName = (name) => {
 };
 
 // Validate that the employee's ID matches the 'UIXXXXXXX' format
+// @params {String} id - The employee's ID to validate.
 const validateEmployeeId = (id) => {
   const regex = /^UI[A-Z0-9]{7}$/;
   if (!regex.test(id)) {
@@ -20,6 +22,7 @@ const validateEmployeeId = (id) => {
 };
 
 // Validate the cafe's ID format
+// @params {String} id - The cafe's ID to validate.
 const validateCafeId = (id) => {
   if (!validate(id)) {
     return { valid: false, message: "Invalid Cafe ID format" };
@@ -28,6 +31,7 @@ const validateCafeId = (id) => {
 };
 
 // Validate that the email address is in the correct format and not empty
+// @params {String} email - The email address to validate.
 const validateEmail = (email) => {
   if (!email || email.trim() === "") {
     return { valid: false, message: "Email cannot be empty" };
@@ -40,6 +44,7 @@ const validateEmail = (email) => {
 };
 
 // Validate that the phone number is in the correct format and not empty
+// @params {String} phone_number - The phone number to validate.
 const validatePhoneNumber = (phone_number) => {
   if (!phone_number || phone_number.trim() === "") {
     return { valid: false, message: "Phone number cannot be empty" };
@@ -55,6 +60,7 @@ const validatePhoneNumber = (phone_number) => {
 };
 
 // Validate the gender and check if it's not empty
+// @params {String} gender - The gender types to validate.
 const validateGender = (gender) => {
   if (!gender || gender.trim() === "") {
     return { valid: false, message: "Gender cannot be empty" };
@@ -66,6 +72,7 @@ const validateGender = (gender) => {
 };
 
 // Validate the date syntax
+// @params {String} date - The date to validate.
 const validateDate = (date) => {
   const parsedDate = parseDate(date);
   if (!parsedDate.isValid()) {
@@ -75,6 +82,7 @@ const validateDate = (date) => {
 };
 
 // Validate the description by checking if it's not empty
+// @params {String} description - The description to validate.
 const validateDescription = (description) => {
   if (!description || description.trim() === "") {
     return { valid: false, message: "Description cannot be empty" };
@@ -83,6 +91,7 @@ const validateDescription = (description) => {
 };
 
 // Validate the location by checking if it's not empty
+// @params {String} location - The location to validate.
 const validateLocation = (location) => {
   if (!location || location.trim() === "") {
     return { valid: false, message: "Location cannot be empty" };

@@ -1,3 +1,4 @@
+// Requests to API endpoints for employees
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from './axios';
 

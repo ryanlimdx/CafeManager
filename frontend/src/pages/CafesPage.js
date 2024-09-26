@@ -1,3 +1,4 @@
+// Page to display all cafes, with options to add, edit, and delete cafes
 import React from "react";
 import { useCafes, useDeleteCafe } from "../api/cafes";
 import { Box, Button, Container, Typography } from "@mui/material";

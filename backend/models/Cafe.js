@@ -1,3 +1,4 @@
+// Initialise Cafe schema
 const mongoose = require("mongoose");
 
 const cafeSchema = new mongoose.Schema({

@@ -1,3 +1,4 @@
+// Navbar component of the application
 import { Container, Typography } from "@mui/material";
 import { useNavigate, useLocation } from "@tanstack/react-router";
 import React from "react";

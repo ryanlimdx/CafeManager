@@ -1,3 +1,4 @@
+// Page for updating the list of cafes by adding or editing a cafe
 import React from 'react';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { useAddCafe, useUpdateCafe, useCafes } from '../api/cafes';

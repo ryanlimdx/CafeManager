@@ -1,3 +1,4 @@
+// Form for adding or editing a cafe
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -29,12 +30,6 @@ const CafesForm = ({ initialData = {}, onSubmit, onCancel }) => {
     }
   }, [initialData]);
 
-  // Prompt user before closing the tab with unsaved changes
-  useBeforeUnload((e) => {
-    if (isFormDirty) {
-      e.preventDefault();
-    }
-  });
   const handleFormChange = () => setIsFormDirty(true);
 
   // Validation checks
@@ -77,13 +72,20 @@ const CafesForm = ({ initialData = {}, onSubmit, onCancel }) => {
     onCancel();
   };
 
+  // Prompt user before closing the tab with unsaved changes
+  useBeforeUnload((e) => {
+    if (isFormDirty) {
+      e.preventDefault();
+    }
+  });
+
   return (
     <Container>
       <Box sx={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <Typography variant="h5" marginBottom="20px">
           {initialData.id ? "Edit Café" : "Add Café"}
         </Typography>
-        
+
         <Grid container spacing={2}>
           {/* Name Field */}
           <Grid item xs={12}>

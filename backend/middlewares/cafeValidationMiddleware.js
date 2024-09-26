@@ -1,3 +1,4 @@
+// Contains validation methods for cafe data
 const { validate } = require("uuid");
 const { validateName, validateDescription, validateLocation } = require("../utils/validationUtils");
 

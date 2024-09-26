@@ -1,3 +1,4 @@
+// To warn users when there is unsaved form data before navigating away (via Navbar)
 import React, { createContext, useState } from 'react';
 
 export const FormDirtyContext = createContext();

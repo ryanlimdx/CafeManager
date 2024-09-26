@@ -1,3 +1,4 @@
+// Form for adding or editing an employee
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -44,13 +45,6 @@ const EmployeesForm = ({
       setCafe(initialData.cafe?.id || "");
     }
   }, [initialData]);
-
-  // Prompt user before closing the tab with unsaved changes
-  useBeforeUnload((e) => {
-    if (isFormDirty) {
-      e.preventDefault();
-    }
-  });
 
   const handleFormChange = () => setIsFormDirty(true);
 
@@ -117,6 +111,13 @@ const EmployeesForm = ({
     setIsFormDirty(false);
     onCancel();
   };
+
+  // Prompt user before closing the tab with unsaved changes
+  useBeforeUnload((e) => {
+    if (isFormDirty) {
+      e.preventDefault();
+    }
+  });
 
   return (
     <Container>
