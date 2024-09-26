@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: `https://cafemanager-zgjk.onrender.com/api/`,
   headers: {
     "Content-Type": "application/json",
   },
