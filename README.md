@@ -49,7 +49,7 @@ Optionally, the following tool is useful to facilitate testing of API endpoints:
 
 - **Postman** (latest version): [Download Postman](https://www.postman.com/downloads/)
 
-## Setting Up Your Local Environment
+## Setting Up with Docker
 
 ### Step 1: Clone the Repository
 ```bash
