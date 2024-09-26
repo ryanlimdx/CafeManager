@@ -13,7 +13,6 @@ RUN npm install
 
 # Copy the relevant (frontend) code to the container
 COPY frontend/ ./
-COPY .env ./
 
 # Build the React app for production
 RUN npm run build
