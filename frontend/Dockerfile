@@ -12,7 +12,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the relevant (frontend) code to the container
-COPY frontend/ ./
+COPY . .
 
 # Build the React app for production
 RUN npm run build
