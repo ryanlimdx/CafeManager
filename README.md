@@ -8,7 +8,7 @@
 - [Features](#features)
 - [Technologies](#technologies)
 - [Prerequisites](#prerequisites)
-- [Setting Up Your Local Environment](#setting-up-your-local-environment)
+- [Setting Up with Docker](#setting-up-with-docker)
 - [API Endpoints](#api-endpoints)
 - [Additional Information](#additional-information)
 
